@@ -27,17 +27,9 @@
             app:argType="string" />
         <action
             android:id="@+id/action_previewFragment_next"
-            app:destination="@id/previewFragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_left"
-            app:popEnterAnim="@anim/enter_from_left"
-            app:popExitAnim="@anim/exit_to_right" />
+            app:destination="@id/previewFragment" />
         <action
             android:id="@+id/action_previewFragment_previous"
-            app:destination="@id/previewFragment"
-            app:enterAnim="@anim/enter_from_left"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_left" />
+            app:destination="@id/previewFragment" />
     </fragment>
 </navigation>

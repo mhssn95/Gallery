@@ -41,7 +41,7 @@ class BrowserAdapter :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val image = itemView.findViewById<ImageView>(R.id.image)
         fun bind(pair: Pair<Int, String>) {
-            image.transitionName = pair.second
+            //todo: set transition name
             itemView.setOnClickListener {
                 onItemClicked?.invoke(pair, image)
             }

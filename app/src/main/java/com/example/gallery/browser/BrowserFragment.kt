@@ -33,17 +33,12 @@ class BrowserFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        postponeEnterTransition()
         val grid: RecyclerView = requireView().findViewById(R.id.grid)
         grid.layoutManager = GridLayoutManager(requireContext(), 2)
         grid.adapter = adapter
 
         adapter.onItemClicked = { uri, image ->
             viewModel.onImageClicked(uri, image)
-        }
-        grid.viewTreeObserver.addOnPreDrawListener {
-            startPostponedEnterTransition()
-            true
         }
     }
 
@@ -57,15 +52,11 @@ class BrowserFragment : Fragment() {
                     adapter.setImages(it.images)
                 }
                 is BrowserViewModel.State.OnImageClicked -> {
-                    val extra = FragmentNavigatorExtras(
-                        it.imageView to it.image.second
-                    )
                     findNavController().navigate(
                         BrowserFragmentDirections.actionBrowserFragmentToPreviewFragment(
                             it.image.first,
                             it.image.second
-                        ),
-                        extra
+                        )
                     )
                 }
             }

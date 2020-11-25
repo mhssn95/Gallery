@@ -1,12 +1,10 @@
 package com.example.gallery.preview
 
-import android.animation.AnimatorInflater
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.*
-import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
@@ -34,10 +32,7 @@ class PreviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        sharedElementEnterTransition =
-            TransitionInflater.from(context)
-                .inflateTransition(R.transition.shared_element_transition)
-        postponeEnterTransition()
+        //todo:set shared element enter transition
         return inflater.inflate(R.layout.fragment_preview, container, false)
     }
 
@@ -53,31 +48,9 @@ class PreviewFragment : Fragment() {
 
     private fun loadImage(uri: String) {
         image.apply {
-            this.transitionName = uri
+            //todo: set transition name
             Glide.with(this)
                 .load(args.imageUri)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        startPostponedEnterTransition()
-                        return false
-                    }
-
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        startPostponedEnterTransition()
-                        return false
-                    }
-                })
                 .into(this)
         }
     }
@@ -130,15 +103,6 @@ class PreviewFragment : Fragment() {
     }
 
     private fun applyLikeAnimation() {
-        likeImage.animate()
-            .alpha(1f)
-            .scaleX(1.5f)
-            .scaleY(1.5f)
-            .withEndAction {
-                likeImage.animate()
-                    .alpha(0f)
-                    .scaleX(1f)
-                    .scaleY(1f)
-            }
+        //apply like animation
     }
 }
