@@ -1,6 +1,5 @@
 package com.example.gallery.browser
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.gallery.R
-import com.example.gallery.getImageUri
 
-class BrowserAdapter(val onItemClicked: ((String, ImageView) -> Unit)? = null) :
+class BrowserAdapter :
     RecyclerView.Adapter<BrowserAdapter.ViewHolder>() {
 
-    private var images = emptyArray<String?>()
+    private var images = emptyList<Pair<Int, String>>()
+    var onItemClicked: ((Pair<Int, String>, ImageView) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -23,7 +22,7 @@ class BrowserAdapter(val onItemClicked: ((String, ImageView) -> Unit)? = null) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        images[position]?.let {
+        images[position].let {
             holder.bind(it)
         }
     }
@@ -32,21 +31,22 @@ class BrowserAdapter(val onItemClicked: ((String, ImageView) -> Unit)? = null) :
         return images.size
     }
 
-    fun setImages(images: Array<String?>) {
-        this.images = images
-        notifyDataSetChanged()
+    fun setImages(images: List<Pair<Int, String>>?) {
+        images?.let {
+            this.images = it
+            notifyDataSetChanged()
+        }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val image = itemView.findViewById<ImageView>(R.id.image)
-        fun bind(imageName: String) {
-            val uri = imageName.getImageUri()
-            image.transitionName = uri
+        fun bind(pair: Pair<Int, String>) {
+            image.transitionName = pair.second
             itemView.setOnClickListener {
-                onItemClicked?.invoke(uri, image)
+                onItemClicked?.invoke(pair, image)
             }
             Glide.with(image)
-                .load(uri)
+                .load(pair.second)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(image)

@@ -20,7 +20,24 @@
         android:label="fragment_preview"
         tools:layout="@layout/fragment_preview">
         <argument
+            android:name="index"
+            app:argType="integer" />
+        <argument
             android:name="imageUri"
             app:argType="string" />
+        <action
+            android:id="@+id/action_previewFragment_next"
+            app:destination="@id/previewFragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popEnterAnim="@anim/enter_from_left"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_previewFragment_previous"
+            app:destination="@id/previewFragment"
+            app:enterAnim="@anim/enter_from_left"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_left" />
     </fragment>
 </navigation>
